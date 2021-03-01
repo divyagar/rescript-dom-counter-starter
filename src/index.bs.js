@@ -9,20 +9,25 @@ var minusButton = document.getElementById("minus-one");
 
 var countElement = document.getElementById("count");
 
-function renderText(n) {
-  countElement.innerText = "Count is " + n;
-  
+var count = {
+  contents: 0
+};
+
+function changeClassNames(param) {
+  if (count.contents > 0) {
+    return "count-positive";
+  } else if (count.contents < 0) {
+    return "count-negative";
+  } else {
+    return "count-zero";
+  }
 }
 
 function changeCountElement(n) {
-  window.count = window.count + n | 0;
-  if (window.count > 0) {
-    return renderText("50");
-  } else if (window.count < 0) {
-    return renderText("-50");
-  } else {
-    return renderText("0");
-  }
+  count.contents = count.contents + n | 0;
+  countElement.innerText = "Count is " + String(count.contents);
+  countElement.classList = "count " + changeClassNames(undefined);
+  
 }
 
 function plusOne(param) {
@@ -41,7 +46,8 @@ export {
   plusButton ,
   minusButton ,
   countElement ,
-  renderText ,
+  count ,
+  changeClassNames ,
   changeCountElement ,
   plusOne ,
   minusOne ,

@@ -1,25 +1,28 @@
 @val external document: {..} = "document"
 @val external window: {..} = "window"
+// @val external count: int = 0
 window["count"] = 0
 
 let plusButton = document["getElementById"]("plus-one")
 let minusButton = document["getElementById"]("minus-one")
 
 let countElement = document["getElementById"]("count")
+let count = ref(0)
 
-let renderText = n => {
-  countElement["innerText"] = `Count is ${n}`
+let changeClassNames = () => {
+  if count.contents > 0 {
+    "count-positive"
+  } else if count.contents < 0 {
+    "count-negative"
+  } else {
+    "count-zero"
+  }
 }
 
 let changeCountElement = n => {
-  window["count"] = window["count"] + n
-  if window["count"] > 0 {
-    renderText("50")
-  } else if window["count"] < 0 {
-    renderText("-50")
-  } else {
-    renderText("0")
-  }
+  count := count.contents + n
+  countElement["innerText"] = `Count is ${Belt.Int.toString(count.contents)}`
+  countElement["classList"] = `count ${changeClassNames()}`
 }
 
 let plusOne = () => changeCountElement(1)
